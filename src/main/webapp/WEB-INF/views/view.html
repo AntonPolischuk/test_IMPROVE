@@ -2,16 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Данные о совещании</title>
 </head>
+
 <body>
-<div th:each="employee:${employee}">
-    <a th:text="${employee.getFirstname()}">user</a>
-привет
-</div>
-<br>
-<hr>
+<form th:method="PATCH" th:action="@{/2/{id}(id=${meeting.getId()})}" th:object="${meeting}" >
+<h1> Данные о совещании</h1>
 
+    <label for="topic"> Тема </label>
+    <input type="text" id="topic" name="topic" th:field="*{topic}" th:value="${meeting.getTopic()}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}">topic</div>
 
+<p><label for="subdivision"> Подразделение </label>
+    <select  id="subdivision" name="subdivision" th:field="*{subdivisionOrg}">
+        <!--<option th:text="${meeting.getSubdivisionOrg()}"></option>-->
+        <option th:each="subdivision:${subdivision}"  th:value="${subdivision}" th:text="${subdivision}">Подразделение</option>
+    </select>
+</p>
+
+        <label>Дата проведения</label>
+        <input  type="date" id="date" name="date"  th:field="*{date}" th:value="${meeting.getDate()}"/>
+        <div style="color: red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">date</div>
+        <label>Время проведния</label>
+        <input type="time" name="time" th:field="*{time}" th th:value="${meeting.getTime()}">
+    <div style="color: red" th:if="${#fields.hasErrors('time')}" th:errors="*{time}">time</div>
+<a th:text="${meeting.getEmployeeOrg()}"></a>
+<a th:text="${meeting.getSubdivisionOrg()}"></a>
+
+<p>
+    <button type="submit">Сохранить</button>
+</p>
+</form>
 </body>
 </html>

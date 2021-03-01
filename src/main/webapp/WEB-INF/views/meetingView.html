@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Данные о совещании</title>
+
+</head>
+<body>
+
+<form th:method="GET" th:action="@{/2/filter}" >
+    <legend>Фильтры</legend>
+
+
+   <p>
+        <label for="topic"> Тема </label>
+        <input type="text" id="topic" name="topic" th:value="${map.get('topic')}"/>
+    <p>
+        <label for="afterDate">Время проведения с  </label>
+        <input type="date" id="afterDate" name="afterDate" th:value="${map.get('afterDate')}"/>
+        <label for="beforeDate">по </label>
+        <input type="date" id="beforeDate" name="beforeDate" th:value="${map.get('beforeDate')}"/>
+    </p>
+    <p>
+        <label for="subdivision"> Подразделение </label>
+        <select  id="subdivision" name="subdivision">
+
+            <option th:text="${map.get('subdivision')}" hidden ></option>
+            <option></option>
+            <option th:each="subdivision:${subdivision}" th:value="${subdivision}" th:text="${subdivision}">Подразделение</option>
+
+        </select>
+    </p>
+
+    <p>
+        <label for="employee"> Участник </label>
+        <select  id="employee" name="employee">
+            <option th:if="${map.size()>0 and map.get('employee').getFullName!=null}" th:value="${map.get('employee')}"th:text="${map.get('employee').getSurnameAndInitials()}" hidden></option>
+            <option></option>
+            <option  th:each="employee:${employee}" th:value="${employee}" th:text="${employee.getSurnameAndInitials()}">Сотрудник</option>
+
+        </select>
+    </p>
+    <p>
+        <button type="submit">Применить фильтр</button>
+        <button type="submit" formaction="/2">Показать все</button>
+    </p>
+
+
+
+
+
+<table border="2">
+
+    <td border="2">Дата проведения</td>
+    <td>Тема</td>
+    <td>Подразделение</td>
+    <td>Ответственный</td>
+    <td>Состав</td>
+    <tr th:each="meeting:${meeting}">
+        <th th:text="${#dates.format(meeting.getDate(), 'dd MMM yyyy')}"></th>
+        <th >
+            <a th:href="@{/2/{id}(id=${meeting.getId()})}" th:text="${meeting.getTopic()}">Ссылка</a>
+        </th>
+        <th th:text="${meeting.getSubdivisionOrg()}"></th>
+        <th th:text="${meeting.getEmployeeOrg().getSurnameAndInitials()}"></th>
+        <th th:text="${meeting.getCount()}"></th>
+    </tr>
+
+
+</table>
+    <p th:if="${meeting.size()==0}">Измените критерии поиска</p>
+
+</form>
+</body>
+</html>

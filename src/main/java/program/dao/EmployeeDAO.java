@@ -20,7 +20,6 @@ public class EmployeeDAO {
     public List<Employee> index(){
 
         return jdbcTemplate.query("SELECT * FROM Employee", new BeanPropertyRowMapper<>(Employee.class));
-
     }
 
 

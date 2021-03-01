@@ -25,6 +25,8 @@ public class MySpringMvcDispatcherInitializer extends AbstractAnnotationConfigDi
 
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
+       aServletContext.setRequestCharacterEncoding("UTF-8");
+        aServletContext.setResponseCharacterEncoding("UTF-8");
         super.onStartup(aServletContext);
         registerHiddenFieldFilter(aServletContext);
     }

@@ -4,17 +4,18 @@ import java.util.Date;
 
 public class Employee {
     private  int id;
-    private String firstname;
-    private String middlename;
-    private String lastname;
+    private String fullName;
+
     private Date dob;
 
-    public Employee(int id, String firstname, String middlename, String lastname, Date dob) {
+    public Employee(int id, String fullName,Date dob) {
         this.id = id;
-        this.firstname = firstname;
-        this.middlename = middlename;
-        this.lastname = lastname;
+        this.fullName = fullName;
         this.dob = dob;
+    }
+
+    public Employee(String fullName) {
+        this.fullName = fullName;
     }
 
     public Employee() {
@@ -28,28 +29,12 @@ public class Employee {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getMiddlename() {
-        return middlename;
-    }
-
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Date getDob() {
@@ -58,5 +43,19 @@ public class Employee {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public String getSurnameAndInitials(){
+        String[] result = null;
+        if(fullName != null) {
+            result = fullName.split(" ");
+            return result[0]+" " + result[1].charAt(0)+". " +result[2].charAt(0)+".";
+        }
+        else return "";
+    }
+
+    @Override
+    public String toString() {
+        return fullName;
     }
 }
